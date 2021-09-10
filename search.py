@@ -25,12 +25,11 @@ def search_country():
     result = ""
     for country in countries:
         continent = countries.get(country)
-        if user == continent:
+        if user.upper() == continent.upper():
             result += country + ", "
-        elif user == country:
+        elif user.upper() == country.upper():
             result = continent
-        else:
-            "Sorry, that was an invalid choice"
+
 
     return result
 
