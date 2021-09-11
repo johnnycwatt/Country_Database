@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import csv
+import re
 
 file = "countries.csv"
 
@@ -20,19 +21,24 @@ def extract_info(file):
         return country_dictionary
 
 def search_country():
-    user = input("Choose a country or a continent: ")
+    user_input = input("Search for a country: ")
     countries = extract_info(file)
-    result = ""
+    new_list = ""
+
+    #Allows the user to search by continent instead.
     for country in countries:
         continent = countries.get(country)
-        if user.upper() == continent.upper():
-            result += country + ", "
-        elif user.upper() == country.upper():
-            result = continent
+        if user_input.upper() == continent.upper():
+            new_list += str(country) + ", "
 
+        #Uses regex to allow the user to search for a country without spelling the entire word
+        search = re.search(user_input.capitalize(), country)
+        if search != None:
+            result = f"{country} is in {continent}"
+            print(result)
 
-    return result
+    if len(new_list) != 0:
+        print(f"Countries in {user_input} are: \n {new_list}")
 
-
-print(search_country())
+search_country()
 
